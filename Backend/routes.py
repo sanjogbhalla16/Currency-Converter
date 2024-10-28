@@ -9,7 +9,7 @@ from flask_jwt_extended import create_access_token, jwt_required
 #from models import User , CurrencyConversion
 #from app import db
 
-auth_bp = Blueprint('auth', __name__)
+auth_bp = Blueprint('auth', __name__) 
 
 
 #API for login
