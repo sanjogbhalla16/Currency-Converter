@@ -4,7 +4,7 @@
 #3. One for Currency Conversion
 from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import create_access_token, jwt_required
+from flask_jwt_extended import create_access_token, jwt_required,get_jwt_identity
 from database import user_collection
 
 auth = Blueprint('auth', __name__)
@@ -15,7 +15,7 @@ auth = Blueprint('auth', __name__)
 #API for login
 @auth.route('/login', methods = ['POST']) #these are  the decorator functions
 @jwt_required()
-def signin():
+def signup():
     data = request.get_json()
     username = data.get(username)
     password = data.get(password)
@@ -46,6 +46,11 @@ def signin():
     return jsonify({"message": "User registered successfully"}), 201
     
 
-
+# Protected Route (requires authentication)
+@auth.route('/protected', methods=['GET'])
+@jwt_required()
+def protected():
+    current_user = get_jwt_identity()
+    return jsonify(logged_in_as=current_user), 200
 
 
