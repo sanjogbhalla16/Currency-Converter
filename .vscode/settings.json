@@ -1,3 +1,10 @@
 {
-  "cSpell.words": ["backref", "jsonify", "signin", "sqlalchemy", "werkzeug"]
+  "cSpell.words": [
+    "backref",
+    "jsonify",
+    "pymongo",
+    "signin",
+    "sqlalchemy",
+    "werkzeug"
+  ]
 }
