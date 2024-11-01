@@ -4,14 +4,16 @@
 #3. One for Currency Conversion
 from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import create_access_token, jwt_required,get_jwt_identity
+from flask_jwt_extended import create_access_token, jwt_required
 from database import user_collection
+import requests
 
 auth = Blueprint('auth', __name__)
 
 
-#API for registration
+#Route for registration
 @auth.route('/register', methods = ['POST'])
+@jwt_required
 def signin():
     data = request.get_json()
     username = data.get('username')
@@ -27,13 +29,12 @@ def signin():
     user_collection.insert_one({"username": username, "password": hashed_password}) 
     return jsonify({"message": "User registered successfully"}), 201
 
-#API for login
-@auth.route('/login', methods = ['POST']) #these are  the decorator functions
-@jwt_required()
+#Route for login
+@auth.route('/login', methods = ['POST']) #these are the decorator functions
 def signup():
     data = request.get_json()
-    username = data.get(username)
-    password = data.get(password)
+    username = data.get('username')
+    password = data.get('password')
     
     #check for the user password authentication
     user = user_collection.find_one({"username":username})
@@ -45,12 +46,21 @@ def signup():
     return jsonify({'message': 'Password Incorrect'}), 401 
         #401 is the status code for unauthorized access
         
-# Protected Route (requires authentication)
-@auth.route('/protected', methods=['GET'])
-@jwt_required()
-def protected():
-    current_user = get_jwt_identity()
-    return jsonify(logged_in_as=current_user), 200
+#Route for Currency conversion
+@auth.route('/convert',methods = ['POST'])
+def Converter():
+    data = request.get_json()
+    amount = data.get('amount')
+    code = data.get('code')
+    url = 'https://v6.exchangerate-api.com/v6/0fe7602e3c578f26d5d18b52/latest/USD'
+    response = requests.get(url).json()
+    
+    if response["result"]:
+        rate = response["conversion_rates"]
+        
+        return rate_code
+    
+    
         
         
 
