@@ -58,7 +58,8 @@ def Converter():
     if response["result"]:
         curr_conversion = response["conversion_rates"]
         rate = curr_conversion.get(code)
-        return f"The exchange rate from USD to {code} is {rate}."
+        print(f"The exchange rate from USD to {code} is {rate}.")
+        return f"The exchange rate amount from USD to {code} is {rate*amount}."
     
     
         
