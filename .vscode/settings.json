@@ -5,6 +5,7 @@
     "pymongo",
     "signin",
     "sqlalchemy",
-    "werkzeug"
+    "werkzeug",
+    "ytmanager"
   ]
 }
