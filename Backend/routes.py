@@ -11,7 +11,7 @@ import requests
 auth = Blueprint('auth', __name__)
 
 
-#Route for registration
+#Route for registration and see the path
 @auth.route('/register', methods = ['POST'])
 @jwt_required
 def signin():
